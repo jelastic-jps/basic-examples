@@ -1,0 +1,108 @@
+{
+  "jpsType": "install",
+  "name": "cloneEnv",
+  "nodes": [
+    {
+      "cloudlets": 16,
+      "nodeType": "tomcat7"
+    },
+    {
+      "cloudlets": 16,
+      "nodeType": "mysql5"
+    }
+  ],
+  "onAfterClone": {
+    "script": "https://download.jelastic.com/public.php?service=files&t=a6a659b4fcb85f4289559747b5568e4e&download"
+  },
+  "onInstall": {
+    "call": [
+      "deployApp",
+      "uploadFiles",
+      "createDb",
+      "replaceInFiles",
+      "bindDomain"
+    ]
+  },
+  "actions": [
+    {
+      "deployApp": {
+        "deploy": [
+          {
+            "archive": "https://download.jelastic.com/public.php?service=files&t=c3afe9748a679a132d47c0148978e3b2&download",
+            "name": "share-5.0.war",
+            "context": "share"
+          },
+          {
+            "archive": "https://download.jelastic.com/public.php?service=files&t=91924607b72d9211c38cfe111d424263&download",
+            "name": "alfresco-5.0.war",
+            "context": "alfresco"
+          }
+        ]
+      }
+    },
+    {
+      "uploadFiles": {
+        "upload [nodeGroup:cp]": [
+          {
+            "sourcePath": "http://app.jelastic.com/xssu/cross/download/RTYYHA81VwNaVlRAYAw4TUMVCRBUShURWBZsHH8iIlYQQktYDwIBQmNTTEBI",
+            "destPath": "${WEBAPPS}/alfresco/WEB-INF/classes/alfresco-global.properties"
+          },
+          {
+            "sourcePath": "http://app.jelastic.com/xssu/cross/download/QjYYHA81VwNaVlRAYAw4TUMVCRBUShURWBZsHH8iIlYQQktYDwIBQmNTTEBI",
+            "destPath": "${JAVA_LIB}/mysql-connector-java-5.0.8-bin.jar"
+          }
+        ]
+      }
+    },
+    {
+      "createDb": {
+        "execCmd [nodeGroup:sqldb]": [
+          "curl \"https://download.jelastic.com/public.php?service=files&t=0f65b115eb5b9cdb889d135579414321&download\" -o /tmp/script.sh 2>&1",
+          "bash /tmp/script.sh \"${nodes.sqldb.password}\" 2>&1"
+        ]
+      }
+    },
+    {
+      "replaceInFiles": {
+        "replaceInFile [nodeGroup:cp]": [
+          {
+            "path": "${WEBAPPS}/alfresco/WEB-INF/classes/alfresco-global.properties",
+            "replacements": [
+              {
+                "pattern": "{DB_HOST}",
+                "replacement": "${nodes.mysql5.address}"
+              },
+              {
+                "pattern": "{DB_USER}",
+                "replacement": "root"
+              },
+              {
+                "pattern": "{DB_PASSWORD}",
+                "replacement": "${nodes.mysql5.password}"
+              },
+              {
+                "pattern": "{DB_NAME}",
+                "replacement": "alfresco"
+              }
+            ]
+          },
+          {
+            "path": "/opt/tomcat/webapps/alfresco/index.jsp",
+            "replacements": [
+              {
+                "pattern": "{HOSTNAME}",
+                "replacement": "${env.url}"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "bindDomain": {
+        "script": "https://download.jelastic.com/public.php?service=files&t=6f5ccac2b011cbc1d6239464ea0a4c97&download"
+      }
+    }
+  ],
+  "success": "Below you will find your admin panel link, username and password.</br></br> <table style='font-size:13px; border: none;'><tr><td>Admin panel URL:</td><td style='padding-left: 10px;'><a href='${env.protocol}://${env.domain}/share/' target='_blank'>${env.protocol}://${env.domain}/share/</a></td></tr>  <tr><td>Admin name:</td><td style='padding-left: 10px;'>admin</td></tr><tr><td>Password:</td><td style='padding-left: 10px;'>admin</td></tr></table></br>To bind a custom domain name with your Alfresco please refer to the steps described in Jelastic <a href='http://docs.jelastic.com/custom-domains' target='_blank'>documentation</a>"
+}

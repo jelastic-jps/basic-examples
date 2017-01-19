@@ -1,0 +1,15 @@
+{
+  "jpsType": "install",
+  "name": "2Envs",
+  "nodes": [
+    {
+      "cloudlets": 16,
+      "nodeType": "nginxphp"
+    }
+  ],
+  "engine": "php5.3",
+  "region": "default_hn_group",
+  "onInstall": {
+    "script": "https://download.jelastic.com/public.php?service=files&t=169362776e246cbf756eb7aad325f676&download"
+  }
+}

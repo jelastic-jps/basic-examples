@@ -48,7 +48,7 @@
             "destPath": "${WEBAPPS}/alfresco/WEB-INF/classes/alfresco-global.properties"
           },
           {
-            "sourcePath": "http://app.jelastic.com/xssu/cross/download/QjYYHA81VwNaVlRAYAw4TUMVCRBUShURWBZsHH8iIlYQQktYDwIBQmNTTEBI",
+            "sourcePath": "https://github.com/jelastic-jps/basic-examples/blob/master/automatic-environment-migration-after-cloning/libs/mysql-connector-java-5.0.8-bin.jar?raw=true",
             "destPath": "${JAVA_LIB}/mysql-connector-java-5.0.8-bin.jar"
           }
         ]

@@ -23,4 +23,6 @@ if (bBindExtDomainEnabled) {
     return jelastic.env.binder.BindExtDomain(sAppid, session, "testDomain.com");
 }
 
-return 0;
+return {
+    result: 0
+};

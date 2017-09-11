@@ -1,5 +1,5 @@
 {
-  "jpsType": "install",
+  "type": "install",
   "name": "Wordpress",
   "homepage": "http://wordpress.org/",
   "description": "WordPress is web software you can use to create a beautiful website or blog. We like to say that WordPress is both free and priceless at the same time.",

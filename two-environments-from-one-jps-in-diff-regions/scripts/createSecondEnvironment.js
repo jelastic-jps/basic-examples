@@ -1,5 +1,5 @@
 var sAppid = getParam("TARGET_APPID"),
-    sSession = hivext.local.getParam("session"),
+    sSession = getParam("session"),
     sRegion = "windows1",
     sEnvGeneratedName = generateEnvName(),
     oNodes = [{

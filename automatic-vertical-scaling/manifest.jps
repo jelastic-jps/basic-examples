@@ -2,10 +2,18 @@
   "type": "update",
   "name": "Nginx Balancer Vertical Scaling",
   "onInstall": "adjustWorkersCount",
+  "targetNodes": {
+    "nodeType": [
+      "nginx",
+      "nginx-dockerized"
+    ]
+  },
   "onAfterSetCloudletCount[nodeType:nginx]": "adjustWorkersCount",
+  "onAfterSetCloudletCount[nodeType:nginx-dockerized]": "adjustWorkersCount",
   "actions": {
     "adjustWorkersCount": {
-      "cmd [nodeType:nginx]": "sed -i \"s|worker_processes.*|worker_processes $(cat /proc/cpuinfo | grep -c 'cpu cores');|g\" /etc/nginx/nginx.conf; sudo /etc/init.d/nginx reload 2>&1"
+      "cmd [bl]": "sed -i \"s|worker_processes.*|worker_processes $(cat /proc/cpuinfo | grep -c 'cpu cores');|g\" /etc/nginx/nginx.conf; sudo /etc/init.d/nginx reload 2>&1",
+      "user": "root"
     }
   }
 }

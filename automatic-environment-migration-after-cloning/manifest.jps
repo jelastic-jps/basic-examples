@@ -12,7 +12,7 @@
     }
   ],
   "onAfterClone": {
-    "script": "https://download.jelastic.com/public.php?service=files&t=a6a659b4fcb85f4289559747b5568e4e&download"
+    "script": "https://raw.githubusercontent.com/jelastic-jps/basic-examples/master/automatic-environment-migration-after-cloning/scripts/onAfterCloneNew.js"
   },
   "onInstall": {
     "call": [
@@ -44,7 +44,7 @@
       "uploadFiles": {
         "upload [nodeGroup:cp]": [
           {
-            "sourcePath": "http://app.jelastic.com/xssu/cross/download/RTYYHA81VwNaVlRAYAw4TUMVCRBUShURWBZsHH8iIlYQQktYDwIBQmNTTEBI",
+            "sourcePath": "https://raw.githubusercontent.com/jelastic-jps/basic-examples/master/automatic-environment-migration-after-cloning/scripts/alfresco-global.properties",
             "destPath": "${WEBAPPS}/alfresco/WEB-INF/classes/alfresco-global.properties"
           },
           {
@@ -57,7 +57,7 @@
     {
       "createDb": {
         "execCmd [nodeGroup:sqldb]": [
-          "curl \"https://download.jelastic.com/public.php?service=files&t=0f65b115eb5b9cdb889d135579414321&download\" -o /tmp/script.sh 2>&1",
+          "curl \"https://raw.githubusercontent.com/jelastic-jps/basic-examples/master/automatic-environment-migration-after-cloning/scripts/dbCreation.sh\" -o /tmp/script.sh 2>&1",
           "bash /tmp/script.sh \"${nodes.sqldb.password}\" 2>&1"
         ]
       }
@@ -100,7 +100,7 @@
     },
     {
       "bindDomain": {
-        "script": "https://download.jelastic.com/public.php?service=files&t=6f5ccac2b011cbc1d6239464ea0a4c97&download"
+        "script": "https://raw.githubusercontent.com/jelastic-jps/basic-examples/master/automatic-environment-migration-after-cloning/scripts/bindDomain.js"
       }
     }
   ],

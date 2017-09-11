@@ -21,86 +21,76 @@
     "replaceInFiles",
     "bindDomain"
   ],
-  "actions": [
-    {
-      "deployApp": {
-        "deploy": [
-          {
-            "archive": "https://download.jelastic.com/public.php?service=files&t=c3afe9748a679a132d47c0148978e3b2&download",
-            "name": "share-5.0.war",
-            "context": "share"
-          },
-          {
-            "archive": "https://download.jelastic.com/public.php?service=files&t=91924607b72d9211c38cfe111d424263&download",
-            "name": "alfresco-5.0.war",
-            "context": "alfresco"
-          }
-        ]
-      }
+  "actions": {
+    "deployApp": {
+      "deploy": [
+        {
+          "archive": "https://download.jelastic.com/public.php?service=files&t=c3afe9748a679a132d47c0148978e3b2&download",
+          "name": "share-5.0.war",
+          "context": "share"
+        },
+        {
+          "archive": "https://download.jelastic.com/public.php?service=files&t=91924607b72d9211c38cfe111d424263&download",
+          "name": "alfresco-5.0.war",
+          "context": "alfresco"
+        }
+      ]
     },
-    {
-      "uploadFiles": {
-        "upload [nodeGroup:cp]": [
-          {
-            "sourcePath": "https://raw.githubusercontent.com/jelastic-jps/basic-examples/master/automatic-environment-migration-after-cloning/scripts/alfresco-global.properties",
-            "destPath": "${WEBAPPS}/alfresco/WEB-INF/classes/alfresco-global.properties"
-          },
-          {
-            "sourcePath": "https://github.com/jelastic-jps/basic-examples/blob/master/automatic-environment-migration-after-cloning/libs/mysql-connector-java-5.0.8-bin.jar?raw=true",
-            "destPath": "${JAVA_LIB}/mysql-connector-java-5.0.8-bin.jar"
-          }
-        ]
-      }
+    "uploadFiles": {
+      "upload [nodeGroup:cp]": [
+        {
+          "sourcePath": "https://raw.githubusercontent.com/jelastic-jps/basic-examples/master/automatic-environment-migration-after-cloning/scripts/alfresco-global.properties",
+          "destPath": "${WEBAPPS}/alfresco/WEB-INF/classes/alfresco-global.properties"
+        },
+        {
+          "sourcePath": "https://github.com/jelastic-jps/basic-examples/blob/master/automatic-environment-migration-after-cloning/libs/mysql-connector-java-5.0.8-bin.jar?raw=true",
+          "destPath": "${JAVA_LIB}/mysql-connector-java-5.0.8-bin.jar"
+        }
+      ]
     },
-    {
-      "createDb": {
-        "execCmd [nodeGroup:sqldb]": [
-          "curl \"https://raw.githubusercontent.com/jelastic-jps/basic-examples/master/automatic-environment-migration-after-cloning/scripts/dbCreation.sh\" -o /tmp/script.sh 2>&1",
-          "bash /tmp/script.sh \"${nodes.sqldb.password}\" 2>&1"
-        ]
-      }
+    "createDb": {
+      "execCmd [nodeGroup:sqldb]": [
+        "curl \"https://raw.githubusercontent.com/jelastic-jps/basic-examples/master/automatic-environment-migration-after-cloning/scripts/dbCreation.sh\" -o /tmp/script.sh 2>&1",
+        "bash /tmp/script.sh \"${nodes.sqldb.password}\" 2>&1"
+      ]
     },
-    {
-      "replaceInFiles": {
-        "replaceInFile [nodeGroup:cp]": [
-          {
-            "path": "${WEBAPPS}/alfresco/WEB-INF/classes/alfresco-global.properties",
-            "replacements": [
-              {
-                "pattern": "{DB_HOST}",
-                "replacement": "${nodes.mysql5.address}"
-              },
-              {
-                "pattern": "{DB_USER}",
-                "replacement": "root"
-              },
-              {
-                "pattern": "{DB_PASSWORD}",
-                "replacement": "${nodes.mysql5.password}"
-              },
-              {
-                "pattern": "{DB_NAME}",
-                "replacement": "alfresco"
-              }
-            ]
-          },
-          {
-            "path": "/opt/tomcat/webapps/alfresco/index.jsp",
-            "replacements": [
-              {
-                "pattern": "{HOSTNAME}",
-                "replacement": "${env.url}"
-              }
-            ]
-          }
-        ]
-      }
+    "replaceInFiles": {
+      "replaceInFile [nodeGroup:cp]": [
+        {
+          "path": "${WEBAPPS}/alfresco/WEB-INF/classes/alfresco-global.properties",
+          "replacements": [
+            {
+              "pattern": "{DB_HOST}",
+              "replacement": "${nodes.mysql5.address}"
+            },
+            {
+              "pattern": "{DB_USER}",
+              "replacement": "root"
+            },
+            {
+              "pattern": "{DB_PASSWORD}",
+              "replacement": "${nodes.mysql5.password}"
+            },
+            {
+              "pattern": "{DB_NAME}",
+              "replacement": "alfresco"
+            }
+          ]
+        },
+        {
+          "path": "/opt/tomcat/webapps/alfresco/index.jsp",
+          "replacements": [
+            {
+              "pattern": "{HOSTNAME}",
+              "replacement": "${env.url}"
+            }
+          ]
+        }
+      ]
     },
-    {
-      "bindDomain": {
-        "script": "https://raw.githubusercontent.com/jelastic-jps/basic-examples/master/automatic-environment-migration-after-cloning/scripts/bindDomain.js"
-      }
+    "bindDomain": {
+      "script": "https://raw.githubusercontent.com/jelastic-jps/basic-examples/master/automatic-environment-migration-after-cloning/scripts/bindDomain.js"
     }
-  ],
+  },
   "success": "Below you will find your admin panel link, username and password.</br></br> <table style='font-size:13px; border: none;'><tr><td>Admin panel URL:</td><td style='padding-left: 10px;'><a href='${env.protocol}://${env.domain}/share/' target='_blank'>${env.protocol}://${env.domain}/share/</a></td></tr>  <tr><td>Admin name:</td><td style='padding-left: 10px;'>admin</td></tr><tr><td>Password:</td><td style='padding-left: 10px;'>admin</td></tr></table></br>To bind a custom domain name with your Alfresco please refer to the steps described in Jelastic <a href='http://docs.jelastic.com/custom-domains' target='_blank'>documentation</a>"
 }

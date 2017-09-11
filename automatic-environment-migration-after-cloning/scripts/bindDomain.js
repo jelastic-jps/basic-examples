@@ -1,5 +1,26 @@
 var sAppid = getParam("TARGET_APPID"),
-    sSession = getParam("session"),
+    bBindExtDomainEnabled = false,
+    aQuotas,
     oResp;
 
-return jelastic.env.binder.BindExtDomain(sAppid, sSession, "testDomain.com");
+oResp = jelastic.billing.account.GetQuotas(appid, session);
+
+if (oResp.result != 0) {
+    return oResp;
+}
+
+aQuotas = oResp.array;
+
+for (var i = 0, n = aQuotas.length; i < n; i += 1) {
+
+    if (aQuotas[i].quota && aQuotas[i].quota.name == 'environment.extdomain.enabled') {
+        bBindExtDomainEnabled = aQuotas[i].value;
+        break;
+    }
+}
+
+if (bBindExtDomainEnabled) {
+    return jelastic.env.binder.BindExtDomain(sAppid, session, "testDomain.com");
+}
+
+return 0;

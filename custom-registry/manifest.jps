@@ -1,0 +1,37 @@
+{
+    "jpsType": "install",
+    "homepage": "https://github.com/jelastic-jps/",
+    "name": "Auto-Scalable Magento EE Cluster",
+    "settings": {
+        "fields": [{
+            "name": "image",
+            "caption": "Image",
+            "type": "string",
+            "required": true
+        }, {
+            "name": "registry",
+            "caption": "Registry URL",
+            "type": "string",
+            "required": true
+        }, {
+            "name": "reg_user",
+            "caption": "User",
+            "type": "string",
+            "required": true
+        }, {
+            "name": "reg_pass",
+            "caption": "Password",
+            "type": "string",
+            "inputType": "password",
+            "required": true
+        }, {}]
+    },
+    "nodes": [{
+        "image": "${settings.image}",
+        "registry": {
+            "url": "${settings.registry}",
+            "user": "${settings.reg_user}",
+            "password": "${settings.reg_pass}"
+        }
+    }]
+}

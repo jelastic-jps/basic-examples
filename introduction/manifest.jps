@@ -1,5 +1,5 @@
 type: install
-name: My Cloud Scenario
+name: My Cloud Scripting
 
 nodes:
   cloudlets: 4  
@@ -8,7 +8,7 @@ nodes:
   nodeType: apache
 
 globals: 
-  appSource: https://github.com/vlobzakov/basic-examples/introduction/raw/master/HelloWorld.zip
+  appSource: https://github.com/vlobzakov/basic-examples/raw/master/introduction/HelloWorld.zip
   
 onInstall:
   deploy:

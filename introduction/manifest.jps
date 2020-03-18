@@ -1,0 +1,20 @@
+type: install
+name: My Cloud Scripting
+
+nodes:
+  cloudlets: 4  
+  count: 1
+  nodeGroup: cp
+  nodeType: apache
+
+globals: 
+  appSource: https://github.com/vlobzakov/basic-examples/raw/master/introduction/HelloWorld.zip
+  
+onInstall:
+  deploy:
+    archive: ${globals.appSource}
+    name: Hello World
+    context: ROOT
+
+success: First application deployed successfully!
+

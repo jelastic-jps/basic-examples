@@ -5,7 +5,7 @@ mkdir kafka
 cd kafka
 
 #Download prepared Dockerfile to build certified Kafka Broker image
-wget https://raw.githubusercontent.com/vlobzakov/basic-examples/master/kafka-image-building/Dockerfile -O Dockerfile
+wget -q https://raw.githubusercontent.com/vlobzakov/basic-examples/master/kafka-image-building/Dockerfile -O Dockerfile
 echo
 echo "Docker file downloaded"
 

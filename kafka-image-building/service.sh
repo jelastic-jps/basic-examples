@@ -17,7 +17,7 @@ echo "Directory tree created"
 #Define start/stop service commands that are allowed to be executed as user kafka in src/etc/sudoers.d/kafka file.
 cat << EOF > src/etc/sudoers.d/kafka
 Cmnd_Alias KAFKA_SERVICE = /sbin/service kafka stop, /sbin/service kafka start, /sbin/service kafka restart
-%ssh-access ALL = NOPASSWD: KAFKA_SERVICE"
+%ssh-access ALL = NOPASSWD: KAFKA_SERVICE
 EOF
 echo
 echo "Necessary rights granted for user kafka"

@@ -36,7 +36,6 @@ EOF
 
 #Create zookepeer.service
 cat << EOF > src/etc/systemd/system/zookeeper.service
-
 [Unit]
 Requires=network.target remote-fs.target
 After=network.target remote-fs.target
@@ -55,7 +54,6 @@ EOF
 
 #Create the src/etc/jelastic/favourites.conf file that configures shortcuts to the most common files and directories at the left pane of Jelastic Configuration File Manager.
 cat << EOF > src/etc/jelastic/favourites.conf
-
 # This file is considered only during container creation. To modify the list of items at Favorites panel,
 # please make the required changes within image initial settings and rebuild it.
 
@@ -71,7 +69,6 @@ EOF
 
 #The redeploy.conf file lists files to keep during the container lifecycle.
 cat << EOF > src/etc/jelastic/redeploy.conf
-
 # This file stores links to custom configuration files or folders that will be kept during container redeploy.
 
 /etc/jelastic/redeploy.conf
@@ -84,8 +81,6 @@ EOF
 
 #It is used by JEM to determine the template-specific logic (service initialization and restart in the case of Kafka).
 cat << EOF > src/var/lib/jelastic/overrides/envinfo.lib
-
-File content:
 case ${COMPUTE_TYPE} in
 kafka)
         STACK_PATH='/opt/kafka';
@@ -94,6 +89,3 @@ kafka)
 ;;
 esac
 EOF
-
-
-

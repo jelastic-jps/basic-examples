@@ -5,7 +5,7 @@ mkdir kafka
 cd kafka
 
 #Download prepared Dockerfile to build certified Kafka Broker image
-wget https://raw.githubusercontent.com/vlobzakov/basic-examples/master/kafka-image-building/Dockerfile -O ~/kafka Dockerfile
+wget https://raw.githubusercontent.com/vlobzakov/basic-examples/master/kafka-image-building/Dockerfile -O Dockerfile
 
 #Create a directory tree where the system service files will be located. These files are added to the image due to the ADD src/. / line in Dockerfile.
 mkdir -p src/etc/sudoers.d src/etc/systemd/system  src/etc/jelastic src/var/lib/jelastic/overrides

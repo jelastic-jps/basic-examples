@@ -18,6 +18,7 @@ echo "Directory tree created"
 cat << EOF > src/etc/sudoers.d/kafka
 Cmnd_Alias KAFKA_SERVICE = /sbin/service kafka stop, /sbin/service kafka start, /sbin/service kafka restart
 %ssh-access ALL = NOPASSWD: KAFKA_SERVICE
+
 EOF
 echo
 echo "Necessary rights granted for user kafka"
@@ -38,6 +39,7 @@ Restart=on-abnormal
 
 [Install]
 WantedBy=multi-user.target
+
 EOF
 echo
 echo "kafka.service file created"
@@ -58,6 +60,7 @@ Restart=on-abnormal
 
 [Install]
 WantedBy=multi-user.target
+
 EOF
 echo
 echo "zookeeper.service file created"
@@ -75,6 +78,7 @@ cat << EOF > src/etc/jelastic/favourites.conf
 /var/spool/cron
 [files]
 /home/jelastic/conf/variables.conf
+
 EOF
 echo
 echo "favourites.conf file created"
@@ -89,6 +93,7 @@ cat << EOF > src/etc/jelastic/redeploy.conf
 /var/spool/cron/kafka
 /usr/lib/locale
 /etc/locale.conf
+
 EOF
 echo
 echo "redeploy.conf file created"
@@ -102,6 +107,7 @@ kafka)
         SERVICE='kafka';
 ;;
 esac
+
 EOF
 echo
 echo "envinfo.lib file created"

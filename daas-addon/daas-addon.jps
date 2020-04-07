@@ -38,7 +38,7 @@ actions:
 
   xInstallAction:
     - cmd [${globals.nodeId}]:
-        yum groupinstall -y "X Window System" “Fonts”;
+        yum groupinstall -y "X Window System" "Fonts";
         yum install -y gnome-classic-session gnome-terminal nautilus-open-terminal control-center;
         unlink /etc/systemd/system/default.target;
         ln -sf /lib/systemd/system/graphical.target /etc/systemd/system/default.target;

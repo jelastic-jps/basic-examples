@@ -27,7 +27,7 @@ onInstall:
   - endpointAddAction
 
 actions:
-  UserDetermination:
+  userDetermination:
       - api : env.control.ExecCmdById
         nodeId: ${globals.nodeId}
         commandList : [{
@@ -49,7 +49,7 @@ actions:
         sed -i "\$a${globals.userOut}\ ALL=NOPASSWD\:\ ALL" /etc/sudoers
       user: root
 
-  EndpointAddAction:
+  endpointAddAction:
     - api : env.control.AddEndpoint
       nodeId: ${globals.nodeId}
       privatePort: ${globals.noMachine_PORT}

@@ -36,7 +36,7 @@ actions:
       - setGlobals:  
           userOut: ${response.out}
 
-  XinstallAction:
+  xInstallAction:
     - cmd [${globals.nodeId}]:
         yum groupinstall -y "X Window System" “Fonts”;
         yum install -y gnome-classic-session gnome-terminal nautilus-open-terminal control-center;

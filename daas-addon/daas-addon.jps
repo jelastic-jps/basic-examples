@@ -6,7 +6,7 @@ logo: http://raw.githubusercontent.com/vlobzakov/basic-examples/master/daas-addo
 
 targetNodes:
   nodeType: 
-    - javaengine,tomcat,tomee-dockerized,glassfish,glassfish4,jetty,jetty6,jetty8,wildfly, springboot
+    - javaengine,tomcat,glassfish,wildfly,springboot
     - vds
     - storage
     - golang
@@ -18,20 +18,20 @@ description:
   
 globals:
   password: ${fn.password(8)}
-  nomachine_port: 4000
+  port: 4000
   
 onInstall:
-  - userDetermination
-  - xInstall
-  - endpointAdd
+  - getUser
+  - instalXWin
+  - addEndpoint
 
 actions:
-  userDetermination:
+  getUser:
     - cmd[${targetNodes.master.id}]: whoami
     - setGlobals:  
         userOut: ${response.out}
 
-  xInstall:
+  instalXWin:
     - cmd [${targetNodes.master.id}]:
         yum groupinstall -y "X Window System" "Fonts";
         yum install -y gnome-classic-session gnome-terminal nautilus-open-terminal control-center;
@@ -44,10 +44,10 @@ actions:
         sed -i "\$a${globals.userOut}\ ALL=NOPASSWD\:\ ALL" /etc/sudoers
       user: root
 
-  endpointAdd:
+  addEndpoint:
     - api : env.control.AddEndpoint
       nodeId: ${targetNodes.master.id}
-      privatePort: ${globals.nomachine_port}
+      privatePort: ${globals.port}
       protocol: TCP
       name: noMachine
     - setGlobals:  

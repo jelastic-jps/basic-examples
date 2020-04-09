@@ -2,7 +2,7 @@ type: update
 version: 1.7
 id: daas-addon
 name: DaaS Add-On
-logo: http://raw.githubusercontent.com/vlobzakov/basic-examples/master/daas-addon/images/daas-logo-nomachine-small.png
+logo: http://raw.githubusercontent.com/vlobzakov/basic-examples/master/daas-addon/images/daas-logo-nomachine-small.svg
 
 targetNodes:
   nodeType: 

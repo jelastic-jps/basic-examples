@@ -101,9 +101,11 @@ actions:
         publicPort: ${response.object.publicPort}
 
 success: |
-  Cloud desktop has been attached to your environment. Use mapped port **${globals.publicPort}** instead of 4000 in NoMachine connection parameters:
+  Cloud desktop has been attached to your environment. Use mapped port instead of port 4000 in NoMachine connection parameters:
   
-  Host: **${env.domain}:${globals.publicPort}**
+  Host: **${env.domain}**
+  
+  Port: **${globals.publicPort}**
   
   Username: **${globals.userOut}**
   

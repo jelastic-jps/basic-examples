@@ -101,7 +101,7 @@ actions:
 success: |
   Cloud desktop has been attached to your environment. Use mapped port instead of port 4000 in NoMachine connection parameters:
   
-  Host: **${env.domain}**
+  Host: **node${targetNodes.master.id}-${env.domain}**
   
   Port: **${globals.publicPort}**
   

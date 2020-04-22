@@ -98,6 +98,9 @@ actions:
     - setGlobals:  
         publicPort: ${response.object.publicPort}
 
+#Success text that is displayed upon successful installation either at the Dashboard, or 
+#via email notification. A success text can be defined as plain text or Markdown syntax and
+#may contain placeholders to provide credentials, URLs and any other useful data
 success: |
   Cloud desktop has been attached to your environment. Use mapped port instead of port 4000 in NoMachine connection parameters:
   

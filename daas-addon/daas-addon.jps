@@ -1,9 +1,6 @@
 #Define the manifest mandatory option: type.
 type: update
 
-#Optional parameter that indicates manifest compatibility. Thus it is compatible with CS version 1.7+ that corresponds to Jelastic version 5.7-b1. Full list of currently used versions can be found at Jelastic & CS Correspondence page.
-version: 1.7
-
 #Optional parameter. If id is not specified it will be generated automatically.
 id: daas-addon
 

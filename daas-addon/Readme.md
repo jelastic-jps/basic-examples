@@ -7,7 +7,7 @@
 
 This Add-On allows to attach Cloud Desktop to any of *[nodeTypes](http://cloudscripting.demo.jelastic.com/creating-manifest/selecting-containers/#all-containers-by-type)*: javaengine, tomcat, glassfish, wildfly, springboot, vds, storage in Jelastic PaaS.    
 
-It downloads and installs NoMachine for Linux client-server software from the official web site for personal use only: [https://www.nomachine.com/download/](https://www.nomachine.com/download/). You can also Bring Your Own License (BYOL) requested from the vendor for commercial purposes.
+It downloads and installs NoMachine for Linux client-server software from the official web site for personal use only: [https://www.nomachine.com/download/](https://www.nomachine.com/download/). You can also Bring Your Own License (BYOL) requested from the vendor for commercial purposes. Please carefully review the license agreement [https://www.nomachine.com/licensing-6](https://www.nomachine.com/licensing-6).
 
 Use NoMachine client software appropriate for your platform to connect to Cloud Desktop.
 

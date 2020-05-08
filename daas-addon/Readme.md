@@ -1,5 +1,5 @@
-<p align="center"> 
-<img style="padding: 0 15px; float: left;" src="images/readme-logo.png" width="200">
+<p align="left"> 
+<img src="images/daas-logo-nomachine-small.png" width="100">
 </p>
 
 # Desktop-as-a-Service Add-On

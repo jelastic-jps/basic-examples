@@ -17,8 +17,7 @@ targetNodes:
     - vds
     - storage
 
-#The next optional description parameters, stated in lines 15-17, help users to figure out what is
-#the add-on might be used for.
+#The next optional description parameters, stated in lines 15-17, help users to figure out what is the add-on might be used for.
 description: 
   text: Install Add-On on any node in order to create Cloud Desktop with Gnome Display Manager and access it via [NoMachine technology](https://www.nomachine.com/)
   short: Use DaaS Add-On to run your workspace in the Cloud 
@@ -28,43 +27,30 @@ globals:
   password: ${fn.password}
   port: 4000
 #Where:
-#The ${globals.password} contains a randomly generated password for the default template’s 
-#user created with the help of function placeholder ${fn.password}. The default template’s user is 
-#a user that container main service runs under, e.g. jvm user for javaengine nodeType, tomcat 
-#user for tomcat nodeType, root user for vds nodeType, etc.
-#The ${globals.port} sets the container port 4000 that should be mapped to the free outside port 
-#of the platform. This port must be open between client and server as a mandatory option to allow 
-#connections by NoMachine’s NX protocol.
+#The ${globals.password} contains a randomly generated password for the default template’s user created with the help of function placeholder ${fn.password}. The default template’s user is a user that container main service runs under, e.g. jvm user for javaengine nodeType, tomcat user for tomcat nodeType, root user for vds nodeType, etc.
+#The ${globals.port} sets the container port 4000 that should be mapped to the free outside portof the platform. This port must be open between client and server as a mandatory option to allow connections by NoMachine’s NX protocol.
 
-#The entry point onInstall event contains three custom actions executed one by one in actions 
-#section below.
+#The entry point onInstall event contains three custom actions executed one by one in actions section below.
 onInstall:
   - getUser
   - installXWin
   - addEndpoint
 
-#Custom action getUser(lines #24,29-32) is created to return a default container username that 
-#will be used to connect to a remote desktop. It is performed with cmd action on the required node 
-#via WebSSH session. Here cmd action performs whoami command in line #30 in order to print to
-#stdout the effective username of the current user. The result is stored in ${response.out} placeholder.
+#Custom action getUser(lines #24,29-32) is created to return a default container username thatc will be used to connect to a remote desktop. It is performed with cmd action on the required node via WebSSH session. Here cmd action performs whoami command in line #30 in order to print to stdout the effective username of the current user. The result is stored in ${response.out} placeholder.
 actions:
   getUser:
       - cmd[${targetNodes.master.id}]: whoami
       - setGlobals:  
           userOut: ${response.out}
-#Where the ${targetNodes.master.id} placeholder contains a target container id that will be 
-#returned after the container(node) is picked up in the installation dialogue.To return the result we 
-#use another action setGlobals that will allow to make the result visible within the global scope of 
-#manifest with ${globals.userOut} placeholder.
+#Where the ${targetNodes.master.id} placeholder contains a target container id that will be returned after the container(node) is picked up in the installation dialogue.To return the result we use another action setGlobals that will allow to make the result visible within the global scope of manifest with ${globals.userOut} placeholder.
 
-#The custom action installXWin executes a series of shell commands with help of cmd action on 
-#the same container. It installs X Window System and Gnome Display Manager 
-#with some associated packages and configuration operations performed.
-#Set a password for default container user.
-#Download the NoMachine package. 
-#Install NoMachine package
-#Add Mozilla Firefox web browser to the desktop
-#Gain user rights to the superuser with no password required to ensure the ability of any other software installation.
+#The custom installXWin action executes a series of shell commands with help of cmd action on the same container: 
+# 1. It installs X Window System and Gnome Display Manager with some associated packages and configuration operations performed.
+# 2. Set a password for default container user.
+# 3. Download the NoMachine package. 
+# 4. Install NoMachine package
+# 5. Add Mozilla Firefox web browser to the desktop
+# 6. Gain user rights to the superuser with no password required to ensure the ability of any other software installation.
   installXWin:
       - cmd [${targetNodes.master.id}]:
           yum groupinstall -y "X Window System" "Fonts";
@@ -78,13 +64,10 @@ actions:
         user: root
 #All mentioned commands in action cmd will be executed under user root. If you do not specify a user they will be performed under default container user e.g. jvm.
 
-#custom action addEndpoint  does port mapping of container open port defined by 
-#${globals.port} placeholder to the outside world through Jelastic Shared Load Balancer. Action 
-#is performed by api action with method env.control.AddEndpoint. The method requires set of 
-#parameters to be passed
+#Custom addEndpoint action maps container open port defined by ${globals.port} placeholder to the outside world through Jelastic Shared Load Balancer. It is performed by api action with env.control.AddEndpoint method that requires a set of parameters to be passed:
 #   -  container nodeId (e.g. defined by ${targetNodes.master.id}
 #   -  container privatePort to be mapped (e.g. defined by ${globals.port})
-#   -  protocol (e.g. TCP)
+#   -  protocol (e.g. TCP or UDP)
 #   -  port mapping name (e.g. noMachine)
   addEndpoint:
     - api : env.control.AddEndpoint
@@ -95,16 +78,11 @@ actions:
     - setGlobals:  
         publicPort: ${response.object.publicPort}
 
-#Success text that is displayed upon successful installation either at the Dashboard, or 
-#via email notification. A success text can be defined as plain text or Markdown syntax and
-#may contain placeholders to provide credentials, URLs and any other useful data
+#Success text that is displayed upon installation either at the Dashboard, or via email notification. It can be defined as plain text or Markdown syntax and may contain placeholders to provide credentials, URLs and other useful data
 success: |
   Cloud desktop has been attached to your environment. Use mapped port instead of port 4000 in NoMachine connection parameters:
   
-  Host: **node${targetNodes.master.id}-${env.domain}**
-  
-  Port: **${globals.publicPort}**
-  
-  Username: **${globals.userOut}**
-  
-  Password: **${globals.password}**
+  **Host**: node${targetNodes.master.id}-${env.domain}  
+  **Port**: ${globals.publicPort}  
+  **Username**: ${globals.userOut}  
+  **Password**: ${globals.password}   

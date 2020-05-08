@@ -1,9 +1,13 @@
-<img align="left" width="150" src="images/readme-logo.png">
+<p align="center"> 
+<img style="padding: 0 15px; float: left;" src="images/readme-logo.png" width="200">
+</p>
+
 # Desktop-as-a-Service Add-On
 
-This Add-On allows to attach Cloud Desktop to any of *nodeTypes*: javaengine, tomcat, glassfish, wildfly, springboot, vds, storage in Jelastic PaaS.    
 
-It downloads and installs NoMachine for Linux client-server software from the official web site for personal use only: [https://www.nomachine.com/download/] (https://www.nomachine.com/download/). You can also Bring Your Own License (BYOL) requested from the vendor for commercial purposes.
+This Add-On allows to attach Cloud Desktop to any of *[nodeTypes](http://cloudscripting.demo.jelastic.com/creating-manifest/selecting-containers/#all-containers-by-type)*: javaengine, tomcat, glassfish, wildfly, springboot, vds, storage in Jelastic PaaS.    
+
+It downloads and installs NoMachine for Linux client-server software from the official web site for personal use only: [https://www.nomachine.com/download/](https://www.nomachine.com/download/). You can also Bring Your Own License (BYOL) requested from the vendor for commercial purposes.
 
 Use NoMachine client software appropriate for your platform to connect to Cloud Desktop.
 
@@ -28,13 +32,13 @@ In the opened confirmation window at Jelastic dashboard choose a destination env
 and click on __Install__.
 
 <p align="left"> 
-<img src="images/target-nodes.png" width="500">
+<img src="images/target-nodes.png" width="650">
 </p>
 
 Once the deployment is finished, you’ll see an appropriate success pop-up.
 
 <p align="left"> 
-<img src="images/success.png" width="350">
+<img src="images/success.png" width="420">
 </p>
 
  In NoMachine client software, use connection string and credentials from the pop-up to connect to the Cloud Desktop.

@@ -58,7 +58,8 @@ actions:
           unlink /etc/systemd/system/default.target;
           ln -sf /lib/systemd/system/graphical.target /etc/systemd/system/default.target;
           echo "${globals.userOut}:${globals.password}" | chpasswd; 
-          wget https://download.nomachine.com/download/6.9/Linux/nomachine_6.9.2_1_x86_64.rpm;           rpm -i nomachine_6.9.2_1_x86_64.rpm; 
+          wget https://download.nomachine.com/download/6.9/Linux/nomachine_6.9.2_1_x86_64.rpm;           
+          rpm -i nomachine_6.9.2_1_x86_64.rpm; 
           yum install -y firefox;
           sed -i "\$a${globals.userOut}\ ALL=NOPASSWD\:\ ALL" /etc/sudoers 
         user: root

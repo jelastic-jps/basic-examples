@@ -47,9 +47,9 @@ actions:
 #The custom installXWin action executes a series of shell commands with help of cmd action on the same container: 
 # 1. It installs X Window System and Gnome Display Manager with some associated packages and configuration operations performed.
 # 2. Set a password for default container user.
-# 3. Download the NoMachine package. 
-# 4. Install NoMachine package
-# 5. Add Mozilla Firefox web browser to the desktop
+# 3. Download the last version of NoMachine free rpm package for Linux. 
+# 4. Install NoMachine package.
+# 5. Add Mozilla Firefox web browser to the desktop.
 # 6. Gain user rights to the superuser with no password required to ensure the ability of any other software installation.
   installXWin:
       - cmd [${targetNodes.master.id}]:

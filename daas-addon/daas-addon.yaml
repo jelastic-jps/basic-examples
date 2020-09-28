@@ -16,7 +16,7 @@ targetNodes:
     - javaengine,tomcat,glassfish,wildfly,springboot
     - vds
     - storage
-
+    
 #The next optional description parameters, stated in lines 15-17, help users to figure out what is the add-on might be used for.
 description: 
   text: Install Add-On on any node in order to create Cloud Desktop with Gnome Display Manager and access it via [NoMachine technology](https://www.nomachine.com/). To avoid any lags, provision 16 cloudlets at least to the destination node.  
@@ -71,7 +71,11 @@ actions:
 #   -  protocol (e.g. TCP or UDP)
 #   -  port mapping name (e.g. noMachine)
   addEndpoint:
-    - api : env.control.AddEndpoint
+    - forEach(nodes.${targetNodes.nodeGroup}[0].endpoints):
+        if (${@i.privatePort} == ${globals.port}): 
+          api: env.control.RemoveEndpoint
+          id: ${@i.id}
+    - api: env.control.AddEndpoint
       nodeId: ${targetNodes.master.id}
       privatePort: ${globals.port}
       protocol: TCP

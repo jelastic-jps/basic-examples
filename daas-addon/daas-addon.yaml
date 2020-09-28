@@ -19,7 +19,7 @@ targetNodes:
 
 #The next optional description parameters, stated in lines 15-17, help users to figure out what is the add-on might be used for.
 description: 
-  text: Install Add-On on any node in order to create Cloud Desktop with Gnome Display Manager and access it via [NoMachine technology](https://www.nomachine.com/)
+  text: Install Add-On on any node in order to create Cloud Desktop with Gnome Display Manager and access it via [NoMachine technology](https://www.nomachine.com/). To avoid any lags, provision 16 cloudlets at least to the destination node.  
   short: Use DaaS Add-On to run your workspace in the Cloud 
 
 #The globals declaration has two placeholders defined within global scope:

@@ -8,7 +8,7 @@ id: daas-addon
 name: DaaS Add-On
 
 #Optional parameter. It attaches manifest logo, that will be displayed in the Marketplace or installation window.
-logo: http://raw.githubusercontent.com/vlobzakov/basic-examples/master/daas-addon/images/daas-logo-nomachine-small.png
+logo: http://raw.githubusercontent.com/jelastic-jps/basic-examples/master/daas-addon/images/daas-logo-nomachine-small.png
 
 #Describe the nodeType the add-on may be installed on. The targetNodes method is used. It filters available nodes in the environment to fit the required nodeType.
 targetNodes:
@@ -58,7 +58,7 @@ actions:
           unlink /etc/systemd/system/default.target;
           ln -sf /lib/systemd/system/graphical.target /etc/systemd/system/default.target;
           echo "${globals.userOut}:${globals.password}" | chpasswd; 
-          wget https://download.nomachine.com/download/6.12/Linux/nomachine_6.12.3_7_x86_64.rpm -O nomachine.rpm;           
+          wget https://raw.githubusercontent.com/jelastic-jps/basic-examples/master/daas-addon/nomachine/nomachine_7.0.211_4_x86_64.rpm -O nomachine.rpm;           
           rpm -i nomachine.rpm; 
           yum install -y firefox;
           sed -i "\$a${globals.userOut}\ ALL=NOPASSWD\:\ ALL" /etc/sudoers 

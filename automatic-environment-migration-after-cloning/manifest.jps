@@ -4,7 +4,7 @@
   "nodes": [
     {
       "cloudlets": 16,
-      "nodeType": "tomcat7"
+      "nodeType": "tomcat"
     },
     {
       "cloudlets": 16,

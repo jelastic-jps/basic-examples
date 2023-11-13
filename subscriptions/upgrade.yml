@@ -1,4 +1,5 @@
 type: install
+jpsVersion: 6.1.1
 id: subscriptions-upgrade-test-flow
 name: Describe subscriptions upgrade flow in JPS packages
 

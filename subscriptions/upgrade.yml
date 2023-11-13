@@ -1,0 +1,117 @@
+type: install
+id: subscriptions-upgrade-test-flow
+name: Describe subscriptions upgrade flow in JPS packages
+
+description:
+  text: Describe subscriptions upgrade flow in JPS packages.
+  short: Describe subscriptions upgrade flow in JPS packages.
+
+settings:
+
+  schema:
+    - caption: Cloudlets
+      name: cloudlets
+    
+    - caption: Disk Limit
+      name: diskspace
+    
+    - caption: Migration Disabled
+      name: migrationDisabled
+
+  fields:
+    - caption: Cloudlets
+      type: spinner
+      name: cloudlets
+      default: 8
+      max: 32
+    
+    - caption: Disk Limit
+      type: spinner
+      name: diskspace
+      default: 30
+      max: 100
+    
+    - caption: Migration Disabled
+      name: migrationDisabled
+      type: checkbox
+      value: false
+    
+    - type: separator
+    
+    - type: envname
+      name: envName
+      caption: Environment
+      dependsOn: region
+      required: true
+    
+    - type: string
+      name: displayName
+      caption: Display Name
+      default: Subscriptions test flow
+    
+    - caption: Region
+      type: regionlist
+      name: region
+      disableInactive: true
+      selectFirstAvailable: true
+
+onInstall:
+  
+  - install:
+      envName: ${settings.envName}
+      region: ${settings.region}
+      displayName: ${settings.displayName}
+      
+      jps:
+        type: install
+        name: ${settings.displayName}
+        nodes:
+          nodeType: nginxphp
+          nodeGroup: cp
+          cloudlets: ${settings.cloudlets}
+          diskLimit: ${settings.diskspace}
+        
+        actions:          
+          applyEnvSettings:
+            script: |
+              var envs = '${this.targetAppid}'.split(',');
+              for (var i=0, n = envs.length; i < n; i++) {
+                let targetAppid = envs[i];
+                let resp = jelastic.env.control.GetEnvInfo(targetAppid, session);
+                if (resp.result != 0) return resp;
+                let node = resp.nodes[0];
+                if (String(node.flexibleCloudlets) != '${this.cloudlets}') {
+                  resp = jelastic.env.control.SetCloudletsCountByGroup({ appid: targetAppid, session: session, nodeGroup: node.nodeGroup, fixedCloudlets: node.fixedCloudlets, flexibleCloudlets: '${this.cloudlets}'});
+                  if (resp.result != 0) return resp;
+                }
+                if (String(node.diskLimit) != '${this.diskspace}') {
+                  resp = jelastic.env.control.SetDiskLimitByGroup({ appid: targetAppid, session: session, nodeGroup: node.nodeGroup, limit: '${this.diskspace}' });
+                  if (resp.result != 0) return resp;
+                }
+              }
+              return { result: 0 };                  
+  
+  - setGlobals:
+      installationId: ${response.uniqueName}
+
+onBeforeMoveProduct:
+  if (${settings.migrationDisabled:false}):
+    stopEvent:
+      type: warning
+      message: Migration is prohibited.
+
+onAfterMoveProduct:
+  log: onAfterMoveProduct
+
+onApplySubscriptionSettings:
+  marketplace.installation.ExecuteAction:
+    appUniqueName: ${globals.installationId}
+    action: applyEnvSettings
+    settings:
+      targetAppid: ${event.params.targetAppid}
+      cloudlets: ${event.params.settings.cloudlets}
+      diskspace: ${event.params.settings.diskspace}000
+
+success:
+  text: |
+    Please use the following data to access!

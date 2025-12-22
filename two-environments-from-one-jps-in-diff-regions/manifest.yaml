@@ -1,0 +1,33 @@
+# Define the manifest mandatory option: type.
+type: install
+
+# Optional parameter. If id is not specified it will be generated automatically.
+id: two-environments-from-one-jps-in-diff-regions
+
+# Defines the required name parameter
+name: 2Envs
+
+homepage: "https://docs.cloudscripting.com/"
+
+description:
+  short: Create two environments from a single package in different regions.
+  text: >
+    Cloud Scripting package that creates the first environment in the specified region and,
+    on the onInstall event, runs a script that provisions a second environment in another region.
+
+# The infrastructure of the environment.
+nodes:
+  - cloudlets: 16
+    nodeType: nginxphp
+
+# Application server/runtime engine
+engine: php5.3
+
+# Target region
+region: default_hn_group
+
+# The entry point for executing actions
+onInstall:
+  script: "https://raw.githubusercontent.com/jelastic-jps/basic-examples/master/two-environments-from-one-jps-in-diff-regions/scripts/createSecondEnvironment.js"
+
+

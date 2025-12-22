@@ -1,0 +1,80 @@
+# Define the manifest mandatory option: type.
+type: update
+
+# Optional parameter. If id is not specified it will be generated automatically.
+id: daas-addon
+
+# Defines the required name parameter
+name: DaaS Add-On
+
+homepage: "https://docs.cloudscripting.com/"
+
+# Optional parameter. It attaches manifest logo, that will be displayed in the Marketplace or installation window.
+logo: http://raw.githubusercontent.com/jelastic-jps/basic-examples/master/daas-addon/images/daas-logo-nomachine-small.png
+
+# Target Nodes — optional method that defines compatible environments for a JPS update.
+# Available only for update installations.
+targetNodes:
+  nodeType:
+    - javaengine,tomcat,glassfish,wildfly,springboot
+    - vds
+    - storage
+
+description:
+  text: Install Add-On on any node in order to create Cloud Desktop with Gnome Display Manager and access it via [NoMachine technology](https://www.nomachine.com/). To avoid any lags, provision 16 cloudlets at least to the destination node.
+  short: Use DaaS Add-On to run your workspace in the Cloud
+
+# Global variables for the package.
+globals:
+  password: ${fn.password}
+  port: 4000
+
+# The entry point for executing actions
+onInstall:
+  - getUser
+  - installXWin
+  - addEndpoint
+
+# Actions list
+actions:
+  getUser:
+    - cmd[${targetNodes.master.id}]: whoami
+    - setGlobals:
+        userOut: ${response.out}
+
+  installXWin:
+    - cmd [${targetNodes.master.id}]:
+        yum groupinstall -y "X Window System" "Fonts";
+        yum install -y gnome-classic-session gnome-terminal nautilus-open-terminal control-center;
+        unlink /etc/systemd/system/default.target;
+        ln -sf /lib/systemd/system/graphical.target /etc/systemd/system/default.target;
+        echo "${globals.userOut}:${globals.password}" | chpasswd;
+        wget https://raw.githubusercontent.com/jelastic-jps/basic-examples/master/daas-addon/nomachine/nomachine_7.0.211_4_x86_64.rpm -O nomachine.rpm;
+        rpm -i nomachine.rpm;
+        yum install -y firefox;
+        sed -i "\$a${globals.userOut}\ ALL=NOPASSWD\:\ ALL" /etc/sudoers
+      user: root
+
+  addEndpoint:
+    - forEach(nodes.${targetNodes.nodeGroup}[0].endpoints):
+        if (${@i.privatePort} == ${globals.port}):
+          api: env.control.RemoveEndpoint
+          id: ${@i.id}
+    - api: env.control.AddEndpoint
+      nodeId: ${targetNodes.master.id}
+      privatePort: ${globals.port}
+      protocol: TCP
+      name: noMachine
+    - setGlobals:
+        publicPort: ${response.object.publicPort}
+
+# Text displayed upon successful installation either at the Dashboard or via email notification
+success: |
+  Cloud desktop has been attached to your environment. Use mapped port instead of port 4000 in NoMachine connection parameters:
+
+  **Host**: node${targetNodes.master.id}-${env.domain}
+  **Port**: ${globals.publicPort}
+  **Username**: ${globals.userOut}
+  **Password**: ${globals.password}
+
+

@@ -1,21 +1,29 @@
+# Define the manifest mandatory option: type.
 type: install
+
 jpsVersion: 6.1.1
+
+# Optional parameter. If id is not specified it will be generated automatically.
 id: subscriptions-upgrade-test-flow
+
+# Defines the required name parameter
 name: Describe subscriptions upgrade flow in JPS packages
 
+homepage: "https://docs.cloudscripting.com/"
+
 description:
-  text: Describe subscriptions upgrade flow in JPS packages.
-  short: Describe subscriptions upgrade flow in JPS packages.
+  short: Describe subscriptions upgrade flow in Cloud Scripting packages.
+  text: >
+    Demonstrates how subscription settings can be applied to an existing installation by handling
+    subscription lifecycle events and executing a custom action to update environment resources.
 
+# Defines user input parameters including simple and UI-based for a JPS installation/update.
 settings:
-
   schema:
     - caption: Cloudlets
       name: cloudlets
-    
     - caption: Disk Limit
       name: diskspace
-    
     - caption: Migration Disabled
       name: migrationDisabled
 
@@ -25,54 +33,50 @@ settings:
       name: cloudlets
       default: 8
       max: 32
-    
     - caption: Disk Limit
       type: spinner
       name: diskspace
       default: 30
       max: 100
-    
     - caption: Migration Disabled
       name: migrationDisabled
       type: checkbox
       value: false
-    
     - type: separator
-    
     - type: envname
       name: envName
       caption: Environment
       dependsOn: region
       required: true
-    
     - type: string
       name: displayName
       caption: Display Name
       default: Subscriptions test flow
-    
     - caption: Region
       type: regionlist
       name: region
       disableInactive: true
       selectFirstAvailable: true
 
+# The entry point for executing actions
 onInstall:
-  
   - install:
       envName: ${settings.envName}
       region: ${settings.region}
       displayName: ${settings.displayName}
-      
+
       jps:
         type: install
         name: ${settings.displayName}
+        # The infrastructure of the environment.
         nodes:
           nodeType: nginxphp
           nodeGroup: cp
           cloudlets: ${settings.cloudlets}
           diskLimit: ${settings.diskspace}
-        
-        actions:          
+
+        # Actions list
+        actions:
           applyEnvSettings:
             script: |
               var envs = '${this.targetAppid}'.split(',');
@@ -90,8 +94,8 @@ onInstall:
                   if (resp.result != 0) return resp;
                 }
               }
-              return { result: 0 };                  
-  
+              return { result: 0 };
+
   - setGlobals:
       installationId: ${response.uniqueName}
 
@@ -113,6 +117,9 @@ onApplySubscriptionSettings:
       cloudlets: ${event.params.settings.cloudlets}
       diskspace: ${event.params.settings.diskspace}000
 
+# Text displayed upon successful installation either at the Dashboard or via email notification
 success:
   text: |
     Please use the following data to access!
+
+

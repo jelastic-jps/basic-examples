@@ -1,0 +1,38 @@
+# Define the manifest mandatory option: type.
+type: install
+
+# Optional parameter. If id is not specified it will be generated automatically.
+id: introduction-hello-world
+
+# Defines the required name parameter
+name: My Cloud Scripting
+
+homepage: "https://docs.cloudscripting.com/"
+
+description:
+  short: A basic Cloud Scripting package example.
+  text: >
+    Provisions an environment with a single Apache node and, on the onInstall event,
+    runs the deploy action to deploy the HelloWorld application into the ROOT context.
+
+nodes:
+  cloudlets: 4
+  count: 1
+  nodeGroup: cp
+  nodeType: apache
+
+# Global variables for the package.
+globals:
+  appSource: "https://github.com/vlobzakov/basic-examples/raw/master/introduction/HelloWorld.zip"
+
+# The entry point for executing actions
+onInstall:
+  deploy:
+    archive: ${globals.appSource}
+    name: Hello World
+    context: ROOT
+
+# Text displayed upon successful installation either at the Dashboard or via email notification
+success: First application deployed successfully!
+
+

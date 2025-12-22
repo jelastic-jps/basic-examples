@@ -1,0 +1,45 @@
+# Define the manifest mandatory option: type.
+type: install
+
+# Optional parameter. If id is not specified it will be generated automatically.
+id: install-add-on-inside-manifest
+
+# Defines the required name parameter
+name: example
+
+homepage: "https://docs.cloudscripting.com/"
+
+description:
+  short: Install an add-on defined inside the manifest.
+  text: >
+    Cloud Scripting package that provisions an Apache node and installs the setExtIp add-on.
+    Demonstrates add-ons declaration and lifecycle event bindings (onInstall/onUnInstall).
+
+# The infrastructure of the environment.
+nodes:
+  - nodeType: apache2
+    cloudlets: 16
+    addons:
+      - setExtIp
+
+# Application server/runtime engine
+engine: php7.0
+
+addons:
+  id: setExtIp
+  onInstall: attacheIp
+  onUnInstall: deAttacheIp
+  actions:
+    attacheIp:
+      setExtIpEnabled:
+        nodeType: apache2
+        enabled: true
+    deAttacheIp:
+      setExtIpEnabled:
+        nodeType: apache2
+        enabled: false
+
+# Text displayed upon successful installation either at the Dashboard or via email notification
+success: Environment with add-on installed successfully!
+
+

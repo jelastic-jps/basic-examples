@@ -1,0 +1,48 @@
+# Define the manifest mandatory option: type.
+type: install
+
+# Optional parameter. If id is not specified it will be generated automatically.
+id: custom-registry
+
+# Defines the required name parameter
+name: Example
+
+homepage: "https://docs.cloudscripting.com/"
+
+description:
+  short: Deploy an image from a custom container registry.
+  text: >
+    Cloud Scripting package that requests image and registry credentials via settings
+    and provisions a node using the specified private registry.
+
+# Defines user input parameters including simple and UI-based for a JPS installation/update.
+settings:
+  fields:
+    - name: image
+      caption: Image
+      type: string
+      required: true
+    - name: registry
+      caption: Registry URL
+      type: string
+      required: true
+    - name: reg_user
+      caption: User
+      type: string
+      required: true
+    - name: reg_pass
+      caption: Password
+      type: string
+      inputType: password
+      required: true
+    - {}
+
+# The infrastructure of the environment.
+nodes:
+  - image: ${settings.image}
+    registry:
+      url: ${settings.registry}
+      user: ${settings.reg_user}
+      password: ${settings.reg_pass}
+
+

@@ -23,7 +23,7 @@ nodes:
 
 # Global variables for the package.
 globals:
-  appSource: "https://github.com/vlobzakov/basic-examples/raw/master/introduction/HelloWorld.zip"
+  appSource: "https://github.com/jelastic-jps/basic-examples/raw/master/introduction/HelloWorld.zip"
 
 # The entry point for executing actions
 onInstall:

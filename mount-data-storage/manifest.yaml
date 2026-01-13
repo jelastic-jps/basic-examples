@@ -1,0 +1,36 @@
+# Define the manifest mandatory option: type.
+type: install
+
+# Optional parameter. If id is not specified it will be generated automatically.
+id: mount-data-storage
+
+# Defines the required name parameter
+name: mount Data Storage
+
+homepage: "https://docs.cloudscripting.com/"
+
+description:
+  short: Mount a storage node volume into application nodes.
+  text: >
+    Cloud Scripting package that provisions application and storage nodes and mounts a shared volume
+    from the storage node group into the application node filesystem.
+
+# The infrastructure of the environment.
+nodes:
+  - volumeMounts:
+      /var/www/webroot/ROOT:
+        readOnly: false
+        sourcePath: /data
+        sourceNodeGroup: storage
+    volumes:
+      - /var/www/webroot/ROOT
+    nodeType: nginxphp
+    cloudlets: 8
+    nodeGroup: cp
+
+  - nodeType: storage
+    cloudlets: 8
+    nodeGroup: storage
+    displayName: Storage
+
+

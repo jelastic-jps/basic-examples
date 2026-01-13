@@ -20,9 +20,6 @@ nodes:
   - cloudlets: 16
     nodeType: nginxphp
 
-# Application server/runtime engine
-engine: php5.3
-
 # Target region
 region: default_hn_group
 

@@ -11,7 +11,7 @@ homepage: "https://docs.cloudscripting.com/"
 
 description:
   short: Create two environments from a single package in different regions.
-  text: >
+  text: |
     Cloud Scripting package that creates the first environment in the specified region and,
     on the onInstall event, runs a script that provisions a second environment in another region.
 

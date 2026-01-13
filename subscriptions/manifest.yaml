@@ -13,7 +13,7 @@ homepage: "https://docs.cloudscripting.com/"
 
 description:
   short: Describe subscriptions upgrade flow in Cloud Scripting packages.
-  text: >
+  text: |
     Demonstrates how subscription settings can be applied to an existing installation by handling
     subscription lifecycle events and executing a custom action to update environment resources.
 

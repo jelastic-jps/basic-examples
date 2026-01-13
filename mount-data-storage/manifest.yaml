@@ -11,7 +11,7 @@ homepage: "https://docs.cloudscripting.com/"
 
 description:
   short: Mount a storage node volume into application nodes.
-  text: >
+  text: |
     Cloud Scripting package that provisions application and storage nodes and mounts a shared volume
     from the storage node group into the application node filesystem.
 

@@ -11,7 +11,7 @@ homepage: "https://docs.cloudscripting.com/"
 
 description:
   short: A basic Cloud Scripting package example.
-  text: >
+  text: |
     Provisions an environment with a single Apache node and, on the onInstall event,
     runs the deploy action to deploy the HelloWorld application into the ROOT context.
 

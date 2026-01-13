@@ -11,7 +11,7 @@ homepage: "https://docs.cloudscripting.com/"
 
 description:
   short: Enable horizontal autoscaling for a target node group.
-  text: >
+  text: |
     Cloud Scripting package that runs on install and enables automatic horizontal scaling
     for the selected targetNodes node group.
 

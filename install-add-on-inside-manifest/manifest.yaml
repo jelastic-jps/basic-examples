@@ -11,7 +11,7 @@ homepage: "https://docs.cloudscripting.com/"
 
 description:
   short: Install an add-on defined inside the manifest.
-  text: >
+  text: |
     Cloud Scripting package that provisions an Apache node and installs the setExtIp add-on.
     Demonstrates add-ons declaration and lifecycle event bindings (onInstall/onUnInstall).
 

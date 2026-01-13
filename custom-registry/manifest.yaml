@@ -11,7 +11,7 @@ homepage: "https://docs.cloudscripting.com/"
 
 description:
   short: Deploy an image from a custom container registry.
-  text: >
+  text: |
     Cloud Scripting package that requests image and registry credentials via settings
     and provisions a node using the specified private registry.
 

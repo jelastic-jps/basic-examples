@@ -18,7 +18,7 @@ targetNodes:
 
 description:
   short: Automatically adjust NGINX worker_processes after vertical scaling.
-  text: >
+  text: |
     Cloud Scripting package for update installations. It recalculates the NGINX worker_processes value
     based on available CPU cores and reloads NGINX after installation and after cloudlet count changes.
 

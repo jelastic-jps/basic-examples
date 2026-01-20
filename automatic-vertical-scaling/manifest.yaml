@@ -1,0 +1,37 @@
+# Define the manifest mandatory option: type.
+type: update
+
+# Optional parameter. If id is not specified it will be generated automatically.
+id: automatic-vertical-scaling
+
+# Defines the required name parameter
+name: Nginx Balancer Vertical Scaling
+
+homepage: "https://docs.cloudscripting.com/"
+
+# Target Nodes — optional method that defines compatible environments for a JPS update.
+# Available only for update installations.
+targetNodes:
+  nodeType:
+    - nginx
+    - nginx-dockerized
+
+description:
+  short: Automatically adjust NGINX worker_processes after vertical scaling.
+  text: |
+    Cloud Scripting package for update installations. It recalculates the NGINX worker_processes value
+    based on available CPU cores and reloads NGINX after installation and after cloudlet count changes.
+
+# The entry point for executing actions
+onInstall: adjustWorkersCount
+
+onAfterSetCloudletCount[nodeType:nginx]: adjustWorkersCount
+onAfterSetCloudletCount[nodeType:nginx-dockerized]: adjustWorkersCount
+
+# Actions list
+actions:
+  adjustWorkersCount:
+    "cmd [bl]": "sed -i \"s|worker_processes.*|worker_processes $(cat /proc/cpuinfo | grep -c 'cpu cores');|g\" /etc/nginx/nginx.conf; sudo /etc/init.d/nginx reload 2>&1"
+    user: root
+
+

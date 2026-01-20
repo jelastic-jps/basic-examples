@@ -1,0 +1,28 @@
+# Define the manifest mandatory option: type.
+type: update
+
+# Optional parameter. If id is not specified it will be generated automatically.
+id: automatic-horizontal-scaling
+
+# Defines the required name parameter
+name: Compute Nodes Horizontal Scaling
+
+homepage: "https://docs.cloudscripting.com/"
+
+description:
+  short: Enable horizontal autoscaling for a target node group.
+  text: |
+    Cloud Scripting package that runs on install and enables automatic horizontal scaling
+    for the selected targetNodes node group.
+
+# Target Nodes — optional method that defines compatible environments for a JPS update.
+# Available only for update installations.
+targetNodes:
+  nodeGroup:
+    - cp
+
+# The entry point for executing actions
+onInstall:
+  script: "https://raw.githubusercontent.com/jelastic-jps/basic-examples/master/automatic-horizontal-scaling/scripts/enableAutoScaling.js"
+
+

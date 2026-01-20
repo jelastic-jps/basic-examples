@@ -1,15 +1,13 @@
 var sAppid = getParam("TARGET_APPID"),
     sSession = getParam("session"),
-    sRegion = "windows1",
+    sRegion = "default_hn2_group",
     sEnvGeneratedName = generateEnvName(),
     oNodes = [{
         "nodeType": "nginxphp",
-        "flexibleCloudlets": 10,
-        "engine": "php5.4"
+        "flexibleCloudlets": 10
     }],
     oEnv = {
         "region": sRegion,
-        "engine": "php5.4",
         "shortdomain": sEnvGeneratedName
     },
     sActionkey = "createenv;" + sEnvGeneratedName;

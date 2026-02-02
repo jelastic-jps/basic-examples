@@ -18,6 +18,7 @@ targetNodes:
   nodeType:
     - javaengine,tomcat,glassfish,wildfly,springboot
     - vds
+    - almalinux-vps
     - storage
 
 description:
